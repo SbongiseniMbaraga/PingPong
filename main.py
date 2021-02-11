@@ -1,5 +1,7 @@
 from turtle import Screen
 from paddles import Paddles
+from ball import Ball
+import time
 
 #set screen
 screen = Screen()
@@ -26,20 +28,14 @@ screen.onkey(r_paddles.move_shape_down, "Down")
 screen.onkey(l_paddles.move_shape_up, "w")
 screen.onkey(l_paddles.move_shape_down, "s")
 
+#ball object
+ball = Ball()
+
 #this updates the screen because I turned of the screen animation by using tracer
 game_is_on = True
 while game_is_on:
+    time.sleep(0.1)
     screen.update()
-
-
-
-
-
-
-
-
-
-
-
+    ball.move_ball()
 
 screen.exitonclick()
