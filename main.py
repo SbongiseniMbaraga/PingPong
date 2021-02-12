@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddles import Paddles
 from ball import Ball
+from scoreboard import Scoreboard
 import time
 
 #set screen
@@ -30,12 +31,33 @@ screen.onkey(l_paddles.move_shape_down, "s")
 
 #ball object
 ball = Ball()
+#scoreboard object
+scoreboard = Scoreboard()
 
 #this updates the screen because I turned of the screen animation by using tracer
 game_is_on = True
+bounce = False
+
 while game_is_on:
-    time.sleep(0.1)
+    time.sleep(ball.move_speed)
     screen.update()
     ball.move_ball()
+
+    #detect walls and bounce
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.bounce_y()
+    #detect collision with r_paddle
+    if ball.distance(r_paddles) < 50 and ball.xcor() > 320 or ball.distance(l_paddles) < 50 and ball.xcor() < -320:
+        ball.bounce_x()
+
+    #detect r player
+    if ball.xcor() > 400:
+        ball.reset_position()
+        scoreboard.l_point()
+
+    #detect l player
+    if ball.xcor() < -400:
+        ball.reset_position()
+        scoreboard.r_point()
 
 screen.exitonclick()
